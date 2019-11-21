@@ -1,11 +1,4 @@
-num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
-lista_tablero=[["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
-               ,["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
-               ,["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"],\
-               ["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"],\
-               ["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"],\
-               ["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]]
-
+#este procedimiento imprime el tablero
 def mostrarTablero():
     global lista_tablero
     for i in range(len(num_columnas)):
@@ -19,17 +12,39 @@ def mostrarTablero():
                    print(lista_tablero[i][j])
              else:
                    print(lista_tablero[i][j],end="")
+                   
+    insertarFicha()
 
+#esta 
+def insertarFicha():
+#aquí veririficamos que el usuario indique un número correcto de columna para colocar su ficha
+    #mientras variable jugador = variable jugador:
+    columna=int(input("\nPor favor, JUGADOR1 dime la columna: "))
+    while columna>7 or columna<1:
+        columna=int(input("la columna que has indicado no es correcta, dime otra: "))
 
-mostrarTablero()
+    #recorremos la columna indicada por el usuario para colocar su ficha en el hueco disponible
+    #for jugador que ha seleccionado la O
+    for i in range(len(lista_tablero)-1,-1,-1):
+        if lista_tablero[i][columna]=="_|":
+            lista_tablero[i][columna]="O|"
+            break
+        elif lista_tablero[0][1]!="_|":
+            columna=int(input("la columna que has indicado está completa, dime otra: "))
 
-columna=int(input("dime la columna: "))
-while columna!=1 and columna!=2 and columna!=3 and columna!=4 and columna!=5 and columna!=6 and columna!=7:
-    columna=int(input("la columna que has indicado no es correcta, dime otra: "))
+    mostrarTablero()
+    #verificar victoria
 
-for i in range(len(lista_tablero)-1,-1,-1):
-    if lista_tablero[i][columna]=="_":
-        lista_tablero[i][columna]="O"
-print=(mostraTablero())
-            
-    
+#VARIABLES
+num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
+lista_tablero=[["|","_|","_|","_|","_|","_|","_|","_|"],\
+               ["|","_|","_|","_|","_|","_|","_|","_|"],\
+               ["|","_|","_|","_|","_|","_|","_|","_|"],\
+               ["|","_|","_|","_|","_|","_|","_|","_|"],\
+               ["|","_|","_|","_|","_|","_|","_|","_|"],\
+               ["|","_|","_|","_|","_|","_|","_|","_|"]]
+
+victoria=False
+
+while victoria==False:
+    mostrarTablero()
