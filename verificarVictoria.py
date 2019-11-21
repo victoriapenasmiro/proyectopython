@@ -1,4 +1,4 @@
-num_columnas=[1,2,3,4,5,6,7]
+num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
 lista_tablero=[["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
                ,["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
                ,["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"],\
@@ -6,10 +6,13 @@ lista_tablero=[["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
                ["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"],\
                ["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]]
 
-def mostraTablero():
+def mostrarTablero():
     global lista_tablero
     for i in range(len(num_columnas)):
-        if i==(        print(num_columnas[i])
+        if i==(len(num_columnas)-1):
+            print(num_columnas[i])
+        else:    
+            print(num_columnas[i],end="")
     for i in range(len(lista_tablero)):
         for j in range(len(lista_tablero[i])):
              if j==(len(lista_tablero[i])-1):
@@ -18,7 +21,7 @@ def mostraTablero():
                    print(lista_tablero[i][j],end="")
 
 
-mostraTablero()
+mostrarTablero()
 
 columna=int(input("dime la columna: "))
 while columna!=1 and columna!=2 and columna!=3 and columna!=4 and columna!=5 and columna!=6 and columna!=7:
