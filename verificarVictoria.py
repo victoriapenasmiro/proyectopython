@@ -9,7 +9,7 @@ lista_tablero=[["|","_","|","_","|","_","|","_","|","_","|","_","|","_","|"]\
 def mostraTablero():
     global lista_tablero
     for i in range(len(num_columnas)):
-        print(num_columnas[i],end="")
+        if i==(        print(num_columnas[i])
     for i in range(len(lista_tablero)):
         for j in range(len(lista_tablero[i])):
              if j==(len(lista_tablero[i])-1):
@@ -19,5 +19,14 @@ def mostraTablero():
 
 
 mostraTablero()
-                            
 
+columna=int(input("dime la columna: "))
+while columna!=1 and columna!=2 and columna!=3 and columna!=4 and columna!=5 and columna!=6 and columna!=7:
+    columna=int(input("la columna que has indicado no es correcta, dime otra: "))
+
+for i in range(len(lista_tablero)-1,-1,-1):
+    if lista_tablero[i][columna]=="_":
+        lista_tablero[i][columna]="O"
+print=(mostraTablero())
+            
+    
