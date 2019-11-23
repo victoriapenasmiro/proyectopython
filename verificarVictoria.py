@@ -38,11 +38,13 @@ def mostrarMenu():
     p1["letra"]=letraP1.upper()
     jugadores.append(p1)
     p2["nombre"]=input("Jugador 2,indica tu nombre: ")
-    if letraP1 == "X":
-        letraP2 = "O"
-    elif letraP1 == "O":
-        letraP2 = "X"
-    p2["letra"]=letraP2
+    if p1["letra"] == "X":
+        #letraP2 = "O"
+        p2["letra"]="O"
+    elif p1["letra"] == "O":
+        #letraP2 = "X"
+        p2["letra"]="X"
+    #p2["letra"]=letraP2
     jugadores.append(p2)
     print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"))
     
@@ -105,6 +107,7 @@ def insertarFicha(jugador):
 
 def comprobarVictoriaVertical(i,jugador,columna):#no funciona, no entra nunca en las condiciones
     global victoria
+    print (i,jugador,columna)
     if lista_tablero[5] or lista_tablero[4] or lista_tablero[3]:
         if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
         lista_tablero[i-3][columna]==(jugador.get("letra") + "|") and\
