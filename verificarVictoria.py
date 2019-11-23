@@ -2,7 +2,7 @@ import random
 import time
 
 def mostrarMenu():
-    """Isma creará una función que sea mostrarInstrucciones con return instrucciones y enviar a esta función"""
+    #Isma creará una función que sea mostrarInstrucciones con return instrucciones y enviar a esta función
     print("*****************************************************\n" +
           "                  JUEGO CONECTA 4\n"
           "*****************************************************\n" +
@@ -26,15 +26,16 @@ def mostrarMenu():
     global letraP2
     
     p1["nombre"]=input("Jugador 1, indica tu nombre: ")
-    letraP1 = input("Elige X o O:")
+    letraP1 = input("Elige X o O:")#probar si podemos eliminar la variable y hacer directamente p1["letra"]
     while not (letraP1=='X' or  letraP1=='O' or letraP1=='x' or letraP1=='o'):
         letraP1=input('Letra incorrecta.Elige X or O?')
     #Convertir letra a mayúscula e insertamos en la lista como diccionario
-    if letraP1 == "x":
+    """if letraP1 == "x":#podemos eliminar este código
         letraP1 = "X"
     elif letraP1 == "o":
         letraP1 = "O"      
-    p1["letra"]=letraP1
+    p1["letra"]=letraP1"""
+    p1["letra"]=letraP1.upper()
     jugadores.append(p1)
     p2["nombre"]=input("Jugador 2,indica tu nombre: ")
     if letraP1 == "X":
@@ -74,6 +75,7 @@ def mostrarTablero():
 
 #este procedimiento inserta las fichas de los jugadores
 def insertarFicha(jugador):
+    global victoria
     if jugador == 0:
         jugador=p1
     else:
@@ -81,26 +83,46 @@ def insertarFicha(jugador):
         
     while victoria==False:
         columna=int(input("\nPor favor " + jugador.get("nombre") + " dime la columna: "))
-        
-        while columna>7 or columna<1: #veririfición número correcto de columna
+        if lista_tablero[0][columna]!="_|":
+            columna=int(input("la columna que has indicado está completa, dime otra: "))
+        #veririfición número correcto de columna
+        while columna>7 or columna<1:
             columna=int(input("la columna que has indicado no es correcta, dime otra: "))
-
+            if lista_tablero[0][columna]!="_|":
+                columna=int(input("la columna que has indicado está completa, dime otra: "))
         #recorremos la columna indicada por el usuario para colocar su ficha en el hueco disponible
         for i in range(len(lista_tablero)-1,-1,-1):
             if lista_tablero[i][columna]=="_|":
                 lista_tablero[i][columna]=jugador.get("letra") + "|"
                 break
-            elif lista_tablero[0][1]!="_|":
-                columna=int(input("la columna que has indicado está completa, dime otra: "))
-
-        if jugador==p1:
-            jugador=p2
-        else:
-            jugador=p1
-            
         mostrarTablero()
-    #verificar victoria
+        comprobarVictoriaVertical(i,jugador,columna)
+        if victoria==False:
+            if jugador==p1:
+                jugador=p2
+            else:
+                jugador=p1
 
+def comprobarVictoriaVertical(i,jugador,columna):#no funciona, no entra nunca en las condiciones
+    global victoria
+    if lista_tablero[5] or lista_tablero[4] or lista_tablero[3]:
+        if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i-3][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i-2][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i-1][columna]==(jugador.get("letra") + "|"):
+            victoria==True
+            print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+
+    elif lista_tablero[0] or lista_tablero[1] or lista_tablero[2]:
+        if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i+1][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i+2][columna]==(jugador.get("letra") + "|") and\
+        lista_tablero[i+3][columna]==jugador.get("letra") + "|":
+            victoria==True
+            print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+        
+    return victoria
+    
 #VARIABLES
 num_col=" 1 2 3 4 5 6 7 "
 num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
