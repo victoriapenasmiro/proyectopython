@@ -105,29 +105,20 @@ def insertarFicha(jugador):
             else:
                 jugador=p1
 
-def comprobarVictoriaVertical(i,jugador,columna):#no funciona, no entra nunca en las condiciones
+def comprobarVictoriaVertical(i,jugador,columna):#el valor de victoria no aplica bien
     global victoria
     print (i,jugador,columna)
-    if lista_tablero[5] or lista_tablero[4] or lista_tablero[3]:
-        if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
-        lista_tablero[i-3][columna]==(jugador.get("letra") + "|") and\
-        lista_tablero[i-2][columna]==(jugador.get("letra") + "|") and\
-        lista_tablero[i-1][columna]==(jugador.get("letra") + "|"):
-            victoria==True
-            print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
-
-    elif lista_tablero[0] or lista_tablero[1] or lista_tablero[2]:
+    if i==0 or i==1 or i==2:
         if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
         lista_tablero[i+1][columna]==(jugador.get("letra") + "|") and\
         lista_tablero[i+2][columna]==(jugador.get("letra") + "|") and\
         lista_tablero[i+3][columna]==jugador.get("letra") + "|":
             victoria==True
             print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
-        
+            
     return victoria
     
 #VARIABLES
-num_col=" 1 2 3 4 5 6 7 "
 num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
 lista_tablero=[["|","_|","_|","_|","_|","_|","_|","_|"],\
                ["|","_|","_|","_|","_|","_|","_|","_|"],\
@@ -146,5 +137,5 @@ jugadorinicial=" "
 #Comienza el procedimiento
 mostrarMenu()
 while victoria==False:
-        mostrarTablero()
-        insertarFicha(jugadorinicial)
+    mostrarTablero()
+    insertarFicha(jugadorinicial)
