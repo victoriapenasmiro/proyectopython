@@ -48,17 +48,28 @@ def mostrarMenu():
         print(p2.get("nombre") + "!\n")
     return jugadorinicial
 
-#este procedimiento imprime el tablero
-"""Crear función que cree el tablero"""
+#este procedimiento crea el tablero
+def crearTablero(filas,columnas):
+    global lista_tablero
+    print (NUMEROS)
+    for i in range (filas):
+        lista_columnas=[]
+        for j in range (columnas):
+            if j == 0:
+                lista_columnas.append("|")
+                print ("|", end = "")
+            elif j == 7:
+                lista_columnas.append("_|")
+                print ("_|")
+            else:
+                lista_columnas.append("_|")
+                print ("_|", end = "")
+        lista_tablero.append(lista_columnas)
+
 def mostrarTablero():
     global lista_tablero
-    #mostramos los num de columnas
-    for i in range(len(num_columnas)):#i hace referencia a la fila, cambiar nombre de i por fila
-        if i==(len(num_columnas)-1):
-            print(num_columnas[i])
-        else:    
-            print(num_columnas[i],end="")
-    #pintamos el tablero        
+    #pintamos el tablero
+    print (NUMEROS)   
     for i in range(len(lista_tablero)):
         for j in range(len(lista_tablero[i])):
              if j==(len(lista_tablero[i])-1):
@@ -69,19 +80,17 @@ def mostrarTablero():
 #este procedimiento inserta las fichas de los jugadores
 def insertarFicha(jugador):
     global victoria
+    global fin
     if jugador == 0:
         jugador=p1
     else:
         jugador=p2
-    while victoria==False:
+    while victoria==False and fin==False:
         columna=int(input("\nPor favor " + jugador.get("nombre") + " dime la columna: "))
+        while columna>7 or columna<1:#veririfición número correcto de columna
+            columna=int(input("la columna que has indicado no es correcta, dime otra: "))
         if lista_tablero[0][columna]!="_|":
             columna=int(input("la columna que has indicado está completa, dime otra: "))
-        #veririfición número correcto de columna
-        while columna>7 or columna<1:
-            columna=int(input("la columna que has indicado no es correcta, dime otra: "))
-            if lista_tablero[0][columna]!="_|":
-                columna=int(input("la columna que has indicado está completa, dime otra: "))
         #recorremos la columna indicada por el usuario para colocar su ficha en el hueco disponible
         for i in range(len(lista_tablero)-1,-1,-1):
             if lista_tablero[i][columna]=="_|":
@@ -91,7 +100,8 @@ def insertarFicha(jugador):
         comprobarVictoriaVertical(i,jugador,columna)
         comprobarVictoriaHorizontal(i,jugador)
         comprobarVictoriaDiagonal(jugador)
-        if victoria==False:
+        finPartida()
+        if victoria==False and fin==False:
             if jugador==p1:
                 jugador=p2
             else:
@@ -130,40 +140,62 @@ def comprobarVictoriaDiagonal(jugador):
     global victoria
     for i in range(len(lista_tablero)-1,-1,-1):
         for j in range(len(lista_tablero[i])):
-            if j<5 and lista_tablero[i][j]==jugador.get("letra") + "|":
-                if lista_tablero[i-1][j+1]==jugador.get("letra") + "|" and\
-                lista_tablero[i-2][j+2]==jugador.get("letra") + "|" and\
-                lista_tablero[i-3][j+3]==jugador.get("letra") + "|":
-                    victoria=True
-                    print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
-                    break
-            elif j>=5 and lista_tablero[i][j]==jugador.get("letra") + "|":
+            if j>4 and lista_tablero[i][j]==jugador.get("letra") + "|":
                 if lista_tablero[i-1][j-1]==jugador.get("letra") + "|" and\
                 lista_tablero[i-2][j-2]==jugador.get("letra") + "|" and\
                 lista_tablero[i-3][j-3]==jugador.get("letra") + "|":
                     victoria=True
                     print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                     break
+            elif j<4 and j>0 and lista_tablero[i][j]==jugador.get("letra") + "|":
+                if lista_tablero[i-1][j+1]==jugador.get("letra") + "|" and\
+                lista_tablero[i-2][j+2]==jugador.get("letra") + "|" and\
+                lista_tablero[i-3][j+3]==jugador.get("letra") + "|":
+                    victoria=True
+                    print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+                    break
+            elif j==4 and lista_tablero[i][j]==jugador.get("letra") + "|":
+                if lista_tablero[i-1][j+1]==jugador.get("letra") + "|" and\
+                lista_tablero[i-2][j+2]==jugador.get("letra") + "|" and\
+                lista_tablero[i-3][j+3]==jugador.get("letra") + "|":
+                    victoria=True
+                    print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+                    break
+                elif lista_tablero[i-1][j-1]==jugador.get("letra") + "|" and\
+                lista_tablero[i-2][j-2]==jugador.get("letra") + "|" and\
+                lista_tablero[i-3][j-3]==jugador.get("letra") + "|":
+                    victoria=True
+                    print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+                    break
     return victoria
-    
+#esta función comprueba si el tablero está completo y no hay ganador
+def finPartida():
+    global fin
+    if "_|" in lista_tablero[0]:
+        fin=False
+    else:
+        fin=True
+        print ("\n¡EMPATE! FIN DE PARTIDA")
+
+#CONTANTES
+FILAS=6
+COLUMNAS=8
+NUMEROS=" 1 2 3 4 5 6 7"
+
 #VARIABLES
-num_columnas=[" ",1," ",2," ",3," ",4," ",5," ",6," ",7]
-lista_tablero=[["|","_|","_|","_|","_|","_|","_|","_|"],\
-               ["|","_|","_|","_|","_|","_|","_|","_|"],\
-               ["|","_|","_|","_|","_|","_|","_|","_|"],\
-               ["|","_|","_|","_|","_|","_|","_|","_|"],\
-               ["|","_|","_|","_|","_|","_|","_|","_|"],\
-               ["|","_|","_|","_|","_|","_|","_|","_|"]]
+lista_tablero=[]
 jugadores=[]
 p1=dict()
 p2=dict()
 letraP1=" "
 letraP2=" "
 victoria=False
+fin=False
 jugadorinicial=" "
 
 #Comienza el juego
 mostrarMenu()
+crearTablero(FILAS,COLUMNAS)
 while victoria==False:
-    mostrarTablero()
     insertarFicha(jugadorinicial)
+
