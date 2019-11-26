@@ -91,7 +91,7 @@ def insertarFicha(jugador):
                 break
         mostrarTablero()
         comprobarVictoriaVertical(i,jugador,columna)
-        comprobarVictoriaHorizontal(i,jugador,columna)
+        comprobarVictoriaHorizontal(i,jugador)
         if victoria==False:
             if jugador==p1:
                 jugador=p2
@@ -101,29 +101,32 @@ def insertarFicha(jugador):
 def comprobarVictoriaVertical(i,jugador,columna):
     global victoria
     if i==0 or i==1 or i==2:
-        if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
-        lista_tablero[i+1][columna]==(jugador.get("letra") + "|") and\
-        lista_tablero[i+2][columna]==(jugador.get("letra") + "|") and\
+        if lista_tablero[i][columna]==jugador.get("letra") + "|" and\
+        lista_tablero[i+1][columna]==jugador.get("letra") + "|" and\
+        lista_tablero[i+2][columna]==jugador.get("letra") + "|" and\
         lista_tablero[i+3][columna]==jugador.get("letra") + "|":
             victoria=True
             print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
             
     return victoria
 
-def comprobarVictoriaHorizontal(i,jugador,columna):
+def comprobarVictoriaHorizontal(i,jugador):
     global victoria
     contador=0
-    #for j in range(len(lista_tablero[i])1,-1,1):#como digo que empiece a buscar desde la posicion 1
-    for j in lista_tablero[i]:
-        #indice=0
-        if j==(jugador.get("letra") + "|"):
-            contador+=1
-            if contador==4: #no se como comprobar que estén correlativas
+    #comprobamos que hay almenos hay 4 fichas repetidas en la fila
+    if lista_tablero[i].count(jugador.get("letra") + "|")>=4:
+        #Empieza desde la posicion 1,porque en la 0 hay un | siempre
+        for j in range(1,len(lista_tablero[i])):
+            if lista_tablero[i][j]==jugador.get("letra") + "|":
+                contador+=1
+            if contador==4:
                 victoria=True
                 print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                 break
-        #indice+=1
-
+            if j+1!=8:
+                if lista_tablero[i][j+1]!=jugador.get("letra") + "|":
+                    contador=0
+                    
     return victoria
     
 #VARIABLES
@@ -142,7 +145,7 @@ letraP2=" "
 victoria=False
 jugadorinicial=" "
 
-#Comienza el procedimiento
+#Comienza el juego
 mostrarMenu()
 while victoria==False:
     mostrarTablero()
