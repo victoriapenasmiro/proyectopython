@@ -91,7 +91,7 @@ def insertarFicha(jugador):
                 break
         mostrarTablero()
         comprobarVictoriaVertical(i,jugador,columna)
-        comprobarVictoriaHorizontal(i,jugador)
+        comprobarVictoriaHorizontal(i,jugador,columna)
         if victoria==False:
             if jugador==p1:
                 jugador=p2
@@ -110,16 +110,19 @@ def comprobarVictoriaVertical(i,jugador,columna):
             
     return victoria
 
-def comprobarVictoriaHorizontal(i,jugador):
+def comprobarVictoriaHorizontal(i,jugador,columna):
     global victoria
     contador=0
-    for j in range(len(lista_tablero[i])1,-1,1):#como digo que empiece a buscar desde la posicion 1
-        if lista_tablero[i][j]==(jugador.get("letra") + "|"):
+    #for j in range(len(lista_tablero[i])1,-1,1):#como digo que empiece a buscar desde la posicion 1
+    for j in lista_tablero[i]:
+        #indice=0
+        if j==(jugador.get("letra") + "|"):
             contador+=1
-            if contador==4:
-                break
+            if contador==4: #no se como comprobar que estén correlativas
                 victoria=True
                 print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+                break
+        #indice+=1
 
     return victoria
     
