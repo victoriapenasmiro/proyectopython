@@ -11,7 +11,7 @@ def comprobarVictoriaHorizontal(i,jugador):
                 victoria=True
                 print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                 break
-            if j+1!=8:
+            if j+1<8:
                 if lista_tablero[i][j+1]!=jugador.get("letra") + "|":
                     contador=0
     return victoria
