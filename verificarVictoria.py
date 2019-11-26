@@ -30,27 +30,18 @@ def mostrarMenu():
     while not (letraP1=='X' or  letraP1=='O' or letraP1=='x' or letraP1=='o'):
         letraP1=input('Letra incorrecta.Elige X or O?')
     #Convertir letra a mayúscula e insertamos en la lista como diccionario
-    """if letraP1 == "x":#podemos eliminar este código
-        letraP1 = "X"
-    elif letraP1 == "o":
-        letraP1 = "O"      
-    p1["letra"]=letraP1"""
     p1["letra"]=letraP1.upper()
     jugadores.append(p1)
     p2["nombre"]=input("Jugador 2,indica tu nombre: ")
     if p1["letra"] == "X":
-        #letraP2 = "O"
         p2["letra"]="O"
     elif p1["letra"] == "O":
-        #letraP2 = "X"
         p2["letra"]="X"
-    #p2["letra"]=letraP2
     jugadores.append(p2)
     print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"))
     
     random.seed(time.time())
     jugadorinicial=random.randint(0,1)
-
     print("Empieza ",end="")    
     if jugadorinicial==0:
         print(p1.get("nombre") + "!\n")
@@ -63,11 +54,13 @@ def mostrarMenu():
 """Isma creará una función que cree el tablero y lo devuelva"""
 def mostrarTablero():
     global lista_tablero
-    for i in range(len(num_columnas)):
+    #mostramos los num de columnas
+    for i in range(len(num_columnas)):#i hace referencia a la fila, cambiar nombre de i por fila
         if i==(len(num_columnas)-1):
             print(num_columnas[i])
         else:    
             print(num_columnas[i],end="")
+    #pintamos el tablero        
     for i in range(len(lista_tablero)):
         for j in range(len(lista_tablero[i])):
              if j==(len(lista_tablero[i])-1):
@@ -82,7 +75,6 @@ def insertarFicha(jugador):
         jugador=p1
     else:
         jugador=p2
-        
     while victoria==False:
         columna=int(input("\nPor favor " + jugador.get("nombre") + " dime la columna: "))
         if lista_tablero[0][columna]!="_|":
@@ -99,13 +91,14 @@ def insertarFicha(jugador):
                 break
         mostrarTablero()
         comprobarVictoriaVertical(i,jugador,columna)
+        comprobarVictoriaHorizontal(i,jugador)
         if victoria==False:
             if jugador==p1:
                 jugador=p2
             else:
                 jugador=p1
 
-def comprobarVictoriaVertical(i,jugador,columna):#el valor de victoria no aplica bien
+def comprobarVictoriaVertical(i,jugador,columna):
     global victoria
     if i==0 or i==1 or i==2:
         if lista_tablero[i][columna]==(jugador.get("letra") + "|") and\
@@ -115,6 +108,19 @@ def comprobarVictoriaVertical(i,jugador,columna):#el valor de victoria no aplica
             victoria=True
             print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
             
+    return victoria
+
+def comprobarVictoriaHorizontal(i,jugador):
+    global victoria
+    contador=0
+    for j in range(len(lista_tablero[i])1,-1,1):#como digo que empiece a buscar desde la posicion 1
+        if lista_tablero[i][j]==(jugador.get("letra") + "|"):
+            contador+=1
+            if contador==4:
+                break
+                victoria=True
+                print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+
     return victoria
     
 #VARIABLES
