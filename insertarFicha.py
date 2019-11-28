@@ -6,11 +6,15 @@ def insertarFicha(jugador):
     else:
         jugador=p2
     while victoria==False and fin==False:
-        columna=int(input("\nPor favor " + jugador.get("nombre") + " dime la columna: "))
-        while columna>7 or columna<1:#veririfición número correcto de columna
-            columna=int(input("la columna que has indicado no es correcta, dime otra: "))
+        columna=int(input("\nPor favor " + jugador.get("nombre") +\
+        " dime la columna: "))
+        #verificar número correcto de columna
+        while columna>7 or columna<1:
+            columna=int(input("la columna que has indicado no es correcta,"+\
+            "dime otra: "))
         if lista_tablero[0][columna]!="_|":
-            columna=int(input("la columna que has indicado está completa, dime otra: "))
+            columna=int(input("la columna que has indicado está completa,"+\
+            "dime otra: "))
         #recorremos la columna indicada por el usuario para colocar su ficha en el hueco disponible
         for i in range(len(lista_tablero)-1,-1,-1):
             if lista_tablero[i][columna]=="_|":
