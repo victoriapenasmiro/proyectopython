@@ -15,6 +15,16 @@ def mostrarInstrucciones():
           "********************************************************"
     return instrucciones
 
+def seleccionJugador1():
+    random.seed(time.time())
+    jugadorinicial=random.randint(0,1)
+    print("Empieza ",end="")    
+    if jugadorinicial==0:
+        print(p1.get("nombre") + "!\n")
+    else:
+        print(p2.get("nombre") + "!\n")
+    return jugadorinicial
+
 def mostrarMenu():
     global jugadores
     global jugadorinicial
@@ -40,15 +50,7 @@ def mostrarMenu():
         p2["letra"]="X"
     jugadores.append(p2)
     print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"))
-    
-    random.seed(time.time())
-    jugadorinicial=random.randint(0,1)
-    print("Empieza ",end="")    
-    if jugadorinicial==0:
-        print(p1.get("nombre") + "!\n")
-    else:
-        print(p2.get("nombre") + "!\n")
-    return jugadorinicial
+    seleccionJugador1()
 
 #Creamos el tablero
 def crearTablero(filas,columnas):
