@@ -42,12 +42,14 @@ def mostrarMenu():
         letraP1=input('Letra incorrecta.Elige X or O?')
     #Convertir letra a mayúscula e insertamos en la lista como diccionario
     p1["letra"]=letraP1.upper()
+    p1["marcador"]=0
     jugadores.append(p1)
     p2["nombre"]=input("Jugador 2,indica tu nombre: ")
     if p1["letra"] == "X":
         p2["letra"]="O"
     elif p1["letra"] == "O":
         p2["letra"]="X"
+    p2["marcador"]=0
     jugadores.append(p2)
     print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"))
     seleccionJugador1()
@@ -82,6 +84,8 @@ def mostrarTablero():
 def insertarFicha(jugador):
     global victoria
     global fin
+    #este contador se utiliza para establecer cuando se empiezan
+    #a ejecutar la comprobaciones de victoria
     contador=0
     if jugador==0:
         jugador=p1
@@ -136,7 +140,9 @@ def comprobarVictoriaVertical(i,jugador,columna):
         lista_tablero[i+3][columna]==jugador.get("letra") + "|":
             victoria=True
             fin=True
+            jugador["marcador"]+=1
             print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
+
     return victoria
 
 def comprobarVictoriaHorizontal(i,jugador):
@@ -257,6 +263,8 @@ letraP2=" "
 victoria=False
 fin=False
 jugadorinicial=" "
+marcadorp1=0
+marcadorp2=0
 
 #=================== EMPIEZA EL JUEGO ============================
 mostrarMenu()
