@@ -80,18 +80,25 @@ def mostrarTablero():
 def insertarFicha(jugador):
     global victoria
     global fin
-    contador = 0
+    contador=0
     if jugador==0:
         jugador=p1
     else:
         jugador=p2
     while victoria==False and fin==False:
-        columna=int(input("\nPor favor " + jugador.get("nombre") +\
-        " dime la columna: "))
-        #verificar número correcto de columna
-        while columna>7 or columna<1:
-            columna=int(input("la columna que has indicado no es correcta,"+\
-            "dime otra: "))
+        columna=0
+        #verificamos que el usuario inserta un int y que
+        #corresponde con una columna valida
+        while columna==0:
+            try:
+                columna=int(input("\nPor favor " + jugador.get("nombre")+\
+                " dime la columna: "))
+                while columna>7 or columna<1:
+                    columna=int(input("la columna que has indicado no es correcta,"+\
+                    "dime otra: "))
+            except:
+                print("El valor introducido no es correcto.")
+                columna=0
         if lista_tablero[0][columna]!="_|":
             columna=int(input("la columna que has indicado está completa,"+\
             "dime otra: "))
@@ -102,6 +109,8 @@ def insertarFicha(jugador):
                 contador+=1
                 break
         mostrarTablero()
+        #verificamos que almenos haya 7 fichas insertadas para empezar
+        #a comprobar una posible victoria
         if contador > 6 and contador < 42:
             comprobarVictoriaVertical(i,jugador,columna)
             comprobarVictoriaHorizontal(i,jugador)
