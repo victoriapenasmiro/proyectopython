@@ -1,24 +1,33 @@
 import random
 import time
+
 def mostrarInstrucciones():
-    instrucciones="                  NORMAS DEL JUEGO:\n" +\
-          "Conecta 4 es un juego para dos jugadores. El tablero\n" +\
-          "consta de 6 filas y 7 columnas. Cada jugador deberá\n" +\
-          "seleccionar el carácter con el que van a jugar, que\n" +\
-          "puede ser X u O. Cada jugador tiene un solo movimiento\n" +\
-          "permitido en su turno.\n"+\
-          "El jugador debe escoger en qué columna quiere poner\n" +\
-          "el carácter (X o O) que ha seleccionad. Los caracteres\n" +\
-          "se irán ubicando en las filas inferiores de la columna\n"+\
-          "seleccionada, amontonándose uno encima de otro.\n" +\
-          "********************************************************\n" +\
-          "********************************************************"
+    instrucciones="******************************************************\
+***************\n"+\
+    "*** ||        ||           ||||||||||       ||       ||   ||       ||\n"+\
+    "** ||||      ||||         ||              || ||     ||    ||       ||\n"+\
+    "* ||  ||    ||  ||       |||||||||||     ||   ||   ||     ||       ||\n"+\
+    " ||    ||  ||    ||     ||              ||     || ||      ||       ||\n"+\
+    "||      ||||      ||   ||||||||||||    ||       ||        |||||||||||\n"+\
+    "*********************************************************************\n"+\
+    "*********************************************************************\n"+\
+    "\n                        NORMAS DEL JUEGO:\n\n" +\
+          "Conecta 4 es un juego para dos jugadores.El tablero consta de 6\n"+\
+          "filas y 7 columnas. Cada jugador deberá seleccionar el carácter\n"+\
+          "con el que van a jugar, que puede ser X u O. Cada jugador tiene\n"+\
+          "un solo movimiento permitido en su turno.\n\n" +\
+          "El jugador debe escoger en qué columna quiere tirar ficha.Y las\n"+\
+          "fichas se irán ubicando desde las filas inferiores de la columna\n"+\
+          "seleccionada, amontonándose una encima de otra.\n\n" +\
+          "***************************************************************\
+*****\n"+\
+          "********************************************************************"
     return instrucciones
 
 def seleccionJugador1():
     random.seed(time.time())
     jugadorinicial=random.randint(0,1)
-    print("Empieza ",end="")    
+    print("\nEMPIEZA ",end="")    
     if jugadorinicial==0:
         print(p1.get("nombre") + "!\n")
     else:
@@ -27,20 +36,14 @@ def seleccionJugador1():
 
 def mostrarMenu():
     global jugadores
-    global jugadorinicial
     global p1
     global p2
-    global letraP1
-    global letraP2
-    print("*****************************************************\n" +
-          "                  JUEGO CONECTA 4\n"
-          "*****************************************************\n")
     print(mostrarInstrucciones())
     p1["nombre"]=input("Jugador 1, indica tu nombre: ")
-    letraP1 = input("Elige X o O:")#probar si podemos eliminar la variable y hacer directamente p1["letra"]
+    letraP1 = input("Elige X o O:")
     while not (letraP1=='X' or  letraP1=='O' or letraP1=='x' or letraP1=='o'):
         letraP1=input('Letra incorrecta.Elige X or O?')
-    #Convertir letra a mayúscula e insertamos en la lista como diccionario
+    #Conversión a mayúscula + añadir dict en lista
     p1["letra"]=letraP1.upper()
     p1["marcador"]=0
     jugadores.append(p1)
@@ -51,15 +54,16 @@ def mostrarMenu():
         p2["letra"]="X"
     p2["marcador"]=0
     jugadores.append(p2)
-    print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"))
-    seleccionJugador1()
+    print(p2.get("nombre"),"te ha tocado el carácter:",p2.get("letra"),"\n")
 
 #Creamos el tablero
-def crearTablero(filas,columnas):
+def crearTablero():
     global lista_tablero
-    for i in range (filas):
+    FILAS=6 #CONTANTE
+    COLUMNAS=8 #CONTANTE
+    for i in range (FILAS):
         lista_columnas=[]
-        for j in range (columnas):
+        for j in range (COLUMNAS):
             if j == 0:
                 lista_columnas.append("|")
             elif j == 7:
@@ -72,6 +76,7 @@ def crearTablero(filas,columnas):
 #pintamos el tablero
 def mostrarTablero():
     global lista_tablero
+    NUMEROS=" 1 2 3 4 5 6 7" #CONTANTE
     print (NUMEROS)   
     for i in range(len(lista_tablero)):
         for j in range(len(lista_tablero[i])):
@@ -84,8 +89,8 @@ def mostrarTablero():
 def insertarFicha(jugador):
     global victoria
     global fin
-    #este contador se utiliza para establecer cuando se empiezan
-    #a ejecutar la comprobaciones de victoria
+    #este contador se utiliza para establecer cuando deben empezar
+    #a ejecutarse las comprobaciones de victoria
     contador=0
     if jugador==0:
         jugador=p1
@@ -128,8 +133,8 @@ def insertarFicha(jugador):
                 jugador=p2
             else:
                 jugador=p1
-    volverJugar()
 
+#*******preguntar a rafa si valen la pena los returns*********
 def comprobarVictoriaVertical(i,jugador,columna):
     global victoria
     global fin
@@ -140,9 +145,8 @@ def comprobarVictoriaVertical(i,jugador,columna):
         lista_tablero[i+3][columna]==jugador.get("letra") + "|":
             victoria=True
             fin=True
-            jugador["marcador"]+=1
+            jugador["marcador"]+=1 #Incremento del marcador del jugador
             print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
-
     return victoria
 
 def comprobarVictoriaHorizontal(i,jugador):
@@ -158,6 +162,7 @@ def comprobarVictoriaHorizontal(i,jugador):
             if contador==4:
                 victoria=True
                 fin=True
+                jugador["marcador"]+=1 #Incremento del marcador del jugador
                 print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                 break
             if j+1<8:
@@ -176,6 +181,7 @@ def comprobarVictoriaDiagonal(jugador):
                 lista_tablero[i-3][j-3]==jugador.get("letra") + "|":
                     victoria=True
                     fin=True
+                    jugador["marcador"]+=1 #Incremento del marcador del jugador
                     print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                     break
             elif j<4 and j>0 and lista_tablero[i][j]==jugador.get("letra") + "|":
@@ -184,6 +190,7 @@ def comprobarVictoriaDiagonal(jugador):
                 lista_tablero[i-3][j+3]==jugador.get("letra") + "|":
                     victoria=True
                     fin=True
+                    jugador["marcador"]+=1 #Incremento del marcador del jugador
                     print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                     break
             elif j==4 and lista_tablero[i][j]==jugador.get("letra") + "|":
@@ -192,6 +199,7 @@ def comprobarVictoriaDiagonal(jugador):
                 lista_tablero[i-3][j+3]==jugador.get("letra") + "|":
                     victoria=True
                     fin=True
+                    jugador["marcador"]+=1 #Incremento del marcador del jugador
                     print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                     break
                 elif lista_tablero[i-1][j-1]==jugador.get("letra") + "|" and\
@@ -199,6 +207,7 @@ def comprobarVictoriaDiagonal(jugador):
                 lista_tablero[i-3][j-3]==jugador.get("letra") + "|":
                     victoria=True
                     fin=True
+                    jugador["marcador"]+=1 #Incremento del marcador del jugador
                     print("\n",jugador.get("nombre"),"¡¡¡HAS GANADO!!!")
                     break
     return victoria
@@ -210,44 +219,72 @@ def finPartida():
             fin=False
         else:
             fin=True
-            print ("\n¡EMPATE! FIN DE PARTIDA")
+            print ("\n¡EMPATE!\n")
 
-def volverJugar ():
+def mostrarMenuFin():
+    opcion=0
+    salir=False
+    while salir==False:
+        print("\n")
+        print("************************************************************")
+        print("********* |||||||||||||||   ()         || ||        || *****")
+        print("******** ||                 ||        ||   ||      ||  *****")
+        print("******* ||||||||||||||      ||       ||     ||    ||   *****")
+        print("****** ||                   ||      ||       ||  ||    *****")
+        print("***** ||                    ||     ||         ||||     *****")
+        print("************************************************************\n")
+        print (" 1) REINICIAR JUEGO")
+        print (" 2) JUGAR REVANCHA")
+        print (" 3) SALIR")
+        while opcion==0:
+            try:
+                opcion=int(input("\n¿Qué opción deseas? "))
+            except:
+                print("EL VALOR INTRODUCIDO NO ES CORRECT0, VUELVE A INTENTARLO.")
+                opcion=0
+        if opcion==1:
+            salir=True
+            volverJugar()
+        elif opcion==2:
+            salir=True
+            jugarRevancha()
+        elif opcion==3:
+            print("\n¡HASTA PRONTO!")
+            salir=True
+        else:
+            print ("LA OPCION INTRODUCIDA ES INCORRECTA, VUELVE A INTENTARLO: ")
+
+def volverJugar():
     global victoria
     global fin
     global lista_tablero
     global jugadores
     global p1
     global p2
-    global letraP1
-    global letraP2
-    global jugadorinicial
-    if victoria==True and fin==True:
-        repetir=input("\nQuieres volver a jugar Y/N?")
-        while repetir!="N" and repetir!="Y" and repetir!="y" and repetir!="n":
-            repetir = input("Opcion incorrecta.Quieres volver a jugar Y/N?")
-        if repetir=="Y" or repetir=="y":
-            #VARIABLES --> Reseteo de valores
-            lista_tablero=[]
-            jugadores=[]
-            p1=dict()
-            p2=dict()
-            letraP1=" "
-            letraP2=" "
-            victoria=False
-            fin=False
-            jugadorinicial=" "
-            mostrarMenu()
-            crearTablero(FILAS,COLUMNAS)
-        else:
-            print("\n¡HASTA PRONTO!")
+    #VARIABLES --> Reseteo de valores
+    lista_tablero=[]
+    jugadores=[]
+    p1=dict()
+    p2=dict()
+    victoria=False
+    fin=False
+    mostrarMenu()
+
+def jugarRevancha():
+    print("\n**************************************************************\n")
+    print("          <<<<<<<<<<<---- MARCADOR ---->>>>>>>>>>>\n")
+    print("                      ",p1.get("nombre"),"VS",p2.get("nombre"),"\n")
+    print("************************************************************")
+    print(p1.get("nombre"),":",p1.get("marcador"),"VICTORIAS\n")
+    print(p2.get("nombre"),":",p2.get("marcador"),"VICTORIAS\n")
+    global victoria
+    global fin
+    global lista_tablero
+    lista_tablero=[]
+    victoria=False
+    fin=False
 
 #=================== PROGRAMA PRINCIPAL ============================
-
-#CONTANTES
-FILAS=6
-COLUMNAS=8
-NUMEROS=" 1 2 3 4 5 6 7"
 
 #LISTAS
 lista_tablero=[]
@@ -258,16 +295,12 @@ p1=dict()
 p2=dict()
 
 #VARIABLES
-letraP1=" "
-letraP2=" "
 victoria=False
 fin=False
-jugadorinicial=" "
-marcadorp1=0
-marcadorp2=0
 
 #=================== EMPIEZA EL JUEGO ============================
 mostrarMenu()
-crearTablero(FILAS,COLUMNAS)
 while victoria==False and fin==False:
-    insertarFicha(jugadorinicial)
+    crearTablero()
+    insertarFicha(seleccionJugador1())
+    mostrarMenuFin()
