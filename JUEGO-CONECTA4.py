@@ -107,12 +107,12 @@ def insertarFicha(jugador):
                 while columna>7 or columna<1:
                     columna=int(input("la columna que has indicado no es correcta,"+\
                     "dime otra: "))
+                while lista_tablero[0][columna]!="_|":
+                    columna=int(input("la columna que has indicado está completa,"+\
+                    "dime otra: "))
             except:
                 print("El valor introducido no es correcto.")
                 columna=0
-        if lista_tablero[0][columna]!="_|":
-            columna=int(input("la columna que has indicado está completa,"+\
-            "dime otra: "))
         #Insertar ficha en el hueco disponible indicado por el jugador
         for i in range(len(lista_tablero)-1,-1,-1):
             if lista_tablero[i][columna]=="_|":
