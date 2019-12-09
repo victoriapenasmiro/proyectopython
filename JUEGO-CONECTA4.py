@@ -133,8 +133,7 @@ def insertarFicha(jugador):
                 jugador=p2
             else:
                 jugador=p1
-
-#*******preguntar a rafa si valen la pena los returns*********
+                
 def comprobarVictoriaVertical(i,jugador,columna):
     global victoria
     global fin
