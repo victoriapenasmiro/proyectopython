@@ -248,7 +248,7 @@ def mostrarMenuFin():
             salir=True
             jugarRevancha()
         elif opcion==3:
-            print("\n¡HASTA PRONTO!")
+            salirJuego()
             salir=True
         else:
             print ("LA OPCION INTRODUCIDA ES INCORRECTA, VUELVE A INTENTARLO: ")
@@ -290,6 +290,15 @@ def jugarRevancha():
     lista_tablero=[]
     victoria=False
     fin=False
+
+def salirJuego():
+    print("********************************************************")
+    print("*****  ||||||||||||||  \|\      /|/     |||||||||||| ***")
+    print("*****  |||        |||   \|\    /|/     ||            ***")
+    print("*****  ||||||||||||||    \|\  /|/     |||||||||||||  ***")
+    print("*****  |||        |||      |||       ||              ***")
+    print("*****  ||||||||||||||      |||      ||||||||||||||   ***")
+    print("********************************************************")
 
 #=================== PROGRAMA PRINCIPAL ============================
 
