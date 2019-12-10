@@ -1,4 +1,4 @@
-def comprobarEmpate(jugador):
+def comprobarEmpateVertical(jugador):
     global fin
     contador_espacios=0
     contador_ficha=0
